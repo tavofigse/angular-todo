@@ -1,0 +1,1 @@
+"use strict";angular.module("todoListApp").service("dataService",function(o){this.helloWorld=function(){console.log("This is the data service's method!!")},this.getTodos=function(e){o.get("mock/todos.json").then(e)},this.deleteTodo=function(o){console.log("The "+o.name+" todo has been deleted!")},this.saveTodo=function(o){console.log("The "+o.name+" todo has been saved!")}});

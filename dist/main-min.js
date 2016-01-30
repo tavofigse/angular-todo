@@ -1,0 +1,1 @@
+"use strict";angular.module("todoListApp").controller("mainCtrl",function(o,t){o.addTodo=function(){var t={name:"This is a new todo."};o.todos.unshift(t)},o.helloWorld=t.helloWorld,t.getTodos(function(t){console.log(t.data),o.todos=t.data}),o.deleteTodo=function(d,e){t.deleteTodo(d),o.todos.splice(e,1)},o.saveTodo=function(o){t.saveTodo(o)}});

@@ -5,8 +5,9 @@
   "main": "gulpfile.js",
   "dependencies": {
     "browserify": "^13.0.0",
-    "gulp-minify": "^0.0.5",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify": "^0.0.5"
   },
   "devDependencies": {},
   "scripts": {
