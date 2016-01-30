@@ -1,0 +1,25 @@
+{
+  "name": "angular-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browserify": "^13.0.0",
+    "gulp-minify": "^0.0.5",
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tavofigse/angular-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tavofigse/angular-todo/issues"
+  },
+  "homepage": "https://github.com/tavofigse/angular-todo#readme"
+}
