@@ -134,11 +134,11 @@ describe('Coleccion de Todos [/todo]', function() {
       var id
 
       async.waterfall([
-        // create a note
+        // create a todo
         function (callback) {
           createTodo(data, callback)
         },
-        // delete this note
+        // delete this todo
         function (res, callback) {
           deleteTodo(res, callback)
           id = res.body.todo.id

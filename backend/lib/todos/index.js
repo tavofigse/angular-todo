@@ -68,7 +68,7 @@ app.route('/todo/:id?/')
     if(!id || !newTodo){
       return res
         .status(404)
-        .json({message: 'required id as parameter and note in body'})
+        .json({message: 'required id as parameter and todo in body'})
     }
 
     newTodo.id = id

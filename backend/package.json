@@ -1,7 +1,7 @@
 {
   "name": "",
   "version": "0.0.0",
-  "description": "Api basico para anotame.la",
+  "description": "Api basico para TODOs",
   "main": "server.js",
   "scripts": {
     "test": "make test",

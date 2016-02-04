@@ -18,8 +18,8 @@ server.use(bodyParser.json('application/json'))
 /**
  * Routes
  */
-var notas = require('./lib/notas')
-server.use(notas)
+var todos = require('./lib/todos')
+server.use(todos)
 
 /**
  * Start server if we're not someone else's dependency
