@@ -1,26 +1,31 @@
+(function () {
 'use strict';
 
-var todoListApp = angular.module('todoListApp');
+angular.module('todos.controllers', [])
 
-todoListApp.controller('mainCtrl', ['$scope', 'dataService', function($scope, dataService) {
-  $scope.addTodo = function() {
-    var todo = {name: "This is a new todo."};
-    $scope.todos.unshift(todo);
-  };
+  .controller('mainCtrl', ['$scope', 'dataService', main])
 
-  $scope.helloWorld = dataService.helloWorld;
+  function main($scope, dataService) {
+    $scope.addTodo = function() {
+      var todo = {name: "This is a new todo."};
+      $scope.todos.unshift(todo);
+    };
 
-  dataService.getTodos(function(response) {
-      console.log(response.data);
-      $scope.todos = response.data;
-    });
+    $scope.helloWorld = dataService.helloWorld;
 
-  $scope.deleteTodo = function(todo, $index) {
-    dataService.deleteTodo(todo);
-    $scope.todos.splice($index, 1);
-  };
+    dataService.getTodos(function(response) {
+        console.log(response.data);
+        $scope.todos = response.data;
+      });
 
-  $scope.saveTodo = function(todo) {
-    dataService.saveTodo(todo);
-  };
-}])
+    $scope.deleteTodo = function(todo, $index) {
+      dataService.deleteTodo(todo);
+      $scope.todos.splice($index, 1);
+    };
+
+    $scope.saveTodo = function(todo) {
+      dataService.saveTodo(todo);
+    };
+  }
+
+})()
