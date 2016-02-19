@@ -2,9 +2,10 @@
  * Module dependencies
  */
 var express = require('express'),
-    logger = require('./lib/logger'),
-    bodyParser = require('body-parser'),
-    mongoose = require('mongoose')
+    logger  = require('./lib/logger'),
+    bodyParser  = require('body-parser'),
+    mongoose    = require('mongoose'),
+    cors        = require('cors')
 
 /**
  * Locals
@@ -14,6 +15,8 @@ var port = process.env.PORT || 3000
 
 // parse json requests
 server.use(bodyParser.json('application/json'))
+
+server.use(cors({allowedOrigins: ['localohst']}))
 
 /**
  * Routes
