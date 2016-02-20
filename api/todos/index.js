@@ -2,12 +2,17 @@ var logger = require('../logger'),
     app = require('express')(),
     Todo = require('./model')
 
-app.route('/todo/:id?/')
+
+app.route('/api/todo/:id?/')
   .all(function (req, res, next) {
     res.set('Content-Type', 'application/json')
     next()
   })
 
+
+  /**
+   * POST
+  **/
   .post(function(req, res) {
     var newTodo = req.body.todo;
     newTodo.id = Date.now()
@@ -27,6 +32,10 @@ app.route('/todo/:id?/')
     })
   })
 
+
+  /**
+   * GET
+  **/
   .get(function (req, res) {
     var id = req.params.id
 
@@ -43,9 +52,7 @@ app.route('/todo/:id?/')
           .status(400)
           .json({message: 'no results'})
       })
-
     }else{
-
       Todo.findOne({id: id}, function (err, data) {
         if(!err && data){
           return res
@@ -61,6 +68,9 @@ app.route('/todo/:id?/')
   })
 
 
+  /**
+   * PUT
+  **/
   .put(function (req, res) {
     var id = req.params.id
     var newTodo = req.body.todo
@@ -86,6 +96,10 @@ app.route('/todo/:id?/')
     })
   })
 
+
+  /**
+   * DELETE
+  **/
   .delete(function (req, res) {
     var id = req.params.id
 
@@ -118,5 +132,6 @@ app.route('/todo/:id?/')
 
     })
   })
+
 
 module.exports = app

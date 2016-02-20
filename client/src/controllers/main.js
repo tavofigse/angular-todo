@@ -14,8 +14,7 @@ angular.module('todos.controllers', [])
     $scope.helloWorld = dataService.helloWorld;
 
     dataService.getTodos(function(response) {
-        console.log(response.data);
-        $scope.todos = response.data;
+        $scope.todos = response.data.todo;
       });
 
     $scope.deleteTodo = function(todo, $index) {

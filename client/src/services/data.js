@@ -4,14 +4,13 @@
 angular.module('todos.services', [])
 
   .service('dataService', ['$http', function($http) {
-    let backAPI = 'http://localhost:3000/todo/';
+    let backAPI = 'http://localhost:3000/api/todo/';
 
     this.helloWorld = function() {
       console.log("This is the data service's method!!");
     };
 
     this.getTodos = function(callback){
-      console.log('consulto a :' + backAPI);
       $http.get(backAPI)
         .then(callback)
     };

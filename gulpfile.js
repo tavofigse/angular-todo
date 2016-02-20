@@ -6,20 +6,22 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var babel = require('babelify');
 
+var home = './client/';
+
 function compile(watch) {
   var bundler = watchify(
-    browserify('./scripts/app.js',{ debug: true })
+    browserify(home + 'src/app.js',{ debug: true })
       .transform(babel)
   );
 
   function rebundle() {
     bundler.bundle()
       .on('error', function(err) { console.error(err); this.emit('end'); })
-      .pipe(source('build.js'))
+      .pipe(source(home + '/public/js/build.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./build'))
+      .pipe(gulp.dest('./'))
   }
 
   if (watch) {
