@@ -18,5 +18,5 @@
     next();
   });
 
-  module.exports.log = logger;
+  module.exports = logger;
 })()
