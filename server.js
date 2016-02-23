@@ -32,6 +32,10 @@ server.use(express.static('client/public'))
 **/
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }))
+
+/**
+* custom log
+**/
 server.use(logUrl.log)
 
 /**
@@ -40,7 +44,7 @@ server.use(logUrl.log)
 server.use(todoRoutes)
 
 /**
- * START SERVER if we're not someone else's dependency
+* START SERVER if we're not someone else's dependency
 **/
 if (!module.parent) {
   mongoose.connect('mongodb://localhost/angular_todos', function() {
