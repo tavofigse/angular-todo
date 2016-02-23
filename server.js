@@ -17,26 +17,26 @@ var port    = process.env.PORT || 3000
 
 
 /**
- * ROUTER
-**/
-server.use(todoRoutes)
-
-
-/**
  * CONFIGURATIONS
  *
  * enable request origin form localhost
 **/
-server.use(cors({allowedOrigins: ['localohst']}))
-/**
- * parse json requests
-**/
-server.use(bodyParser.json('application/json'))
+server.use(cors({allowedOrigins: ['angular-todo']}))
 /**
  * where are the assets?
 **/
 server.use(express.static('client/public'))
+/**
+* parse json requests
+**/
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
 
+
+/**
+* ROUTER
+**/
+server.use(todoRoutes)
 
 /**
  * START SERVER if we're not someone else's dependency

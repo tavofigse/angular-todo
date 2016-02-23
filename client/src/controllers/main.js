@@ -1,30 +1,52 @@
 (function () {
-'use strict';
+'use strict'
 
 angular.module('todos.controllers', [])
 
   .controller('mainCtrl', ['$scope', 'dataService', main])
 
-  function main($scope, dataService) {
-    $scope.addTodo = function() {
-      var todo = {name: "This is a new todo."};
-      $scope.todos.unshift(todo);
-    };
+  function main($mainScope, dataService) {
 
-    $scope.helloWorld = dataService.helloWorld;
+    /*
+     * init
+    */
+    dataService.getTodos()
+      .then(function (response) {
+        $mainScope.todos = response.data.todo
+      })
 
-    dataService.getTodos(function(response) {
-        $scope.todos = response.data.todo;
-      });
+    /*
+     * controller functions
+    */
+    $mainScope.addTodo = (() => {
+      var todo = {name: "This is a new todo.", id: Date.now()}
+      dataService.saveTodo(todo)
+        .then((data) => {
+          $mainScope.todos.unshift(data.todo)
+        })
+    })
 
-    $scope.deleteTodo = function(todo, $index) {
-      dataService.deleteTodo(todo);
-      $scope.todos.splice($index, 1);
-    };
+    $mainScope.deleteTodo = ((todo) => {
+      dataService.deleteTodo(todo)
+        .then((res) => {
+          if (res.done) {
+            let todos = $mainScope.todos
+            todos = todos.filter(((item) => {
+              return item.id !== todo.id;
+            }));
+            $mainScope.todos = todos
+          }else{
+            console.log(res.statusText)
+          }
+        })
+    })
 
-    $scope.saveTodo = function(todo) {
-      dataService.saveTodo(todo);
-    };
+    $mainScope.saveTodo = ((todo) => {
+      dataService.saveTodo(todo)
+        .then((data) => {
+          console.log(data)
+        })
+    })
   }
 
 })()

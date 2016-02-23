@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function () {
+    'use strict';
 
     var angular = require('angular'),
         controllers = require('./controllers/main'),
@@ -15,25 +16,43 @@
 
   angular.module('todos.controllers', []).controller('mainCtrl', ['$scope', 'dataService', main]);
 
-  function main($scope, dataService) {
-    $scope.addTodo = function () {
-      var todo = { name: "This is a new todo." };
-      $scope.todos.unshift(todo);
-    };
+  function main($mainScope, dataService) {
 
-    $scope.helloWorld = dataService.helloWorld;
-
-    dataService.getTodos(function (response) {
-      $scope.todos = response.data.todo;
+    /*
+     * init
+    */
+    dataService.getTodos().then(function (response) {
+      $mainScope.todos = response.data.todo;
     });
 
-    $scope.deleteTodo = function (todo, $index) {
-      dataService.deleteTodo(todo);
-      $scope.todos.splice($index, 1);
+    /*
+     * controller functions
+    */
+    $mainScope.addTodo = () => {
+      var todo = { name: "This is a new todo.", id: Date.now() };
+      dataService.saveTodo(todo).then(data => {
+        $mainScope.todos.unshift(data.todo);
+      });
     };
 
-    $scope.saveTodo = function (todo) {
-      dataService.saveTodo(todo);
+    $mainScope.deleteTodo = todo => {
+      dataService.deleteTodo(todo).then(res => {
+        if (res.done) {
+          let todos = $mainScope.todos;
+          todos = todos.filter(item => {
+            return item.id !== todo.id;
+          });
+          $mainScope.todos = todos;
+        } else {
+          console.log(res.statusText);
+        }
+      });
+    };
+
+    $mainScope.saveTodo = todo => {
+      dataService.saveTodo(todo).then(data => {
+        console.log(data);
+      });
     };
   }
 })();
@@ -56,24 +75,25 @@
   'use strict';
 
   angular.module('todos.services', []).service('dataService', ['$http', function ($http) {
-    let backAPI = 'http://localhost:3000/api/todo/';
+    let backendAPI = 'http://angular-todo:3000/api/todo/';
 
-    this.helloWorld = function () {
-      console.log("This is the data service's method!!");
-    };
-
-    this.getTodos = function (callback) {
-      $http.get(backAPI).then(callback);
-    };
-
-    this.deleteTodo = function (todo) {
-      console.log("The " + todo.name + " todo has been deleted!");
-      // other logic
+    this.getTodos = function () {
+      return $http.get(backendAPI);
     };
 
     this.saveTodo = function (todo) {
-      console.log("The " + todo.name + " todo has been saved!");
-      // other logic...
+      return Promise.resolve($http.post(backendAPI, { todo: todo })).then(res => {
+        return res.data;
+      });
+    };
+
+    this.deleteTodo = function (todo, callback) {
+      return Promise.resolve($http.delete(`${ backendAPI }${ todo.id }`)).then(res => {
+        return {
+          done: res.status === 204,
+          statusText: res.statusText
+        };
+      });
     };
   }]);
 })();

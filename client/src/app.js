@@ -1,4 +1,5 @@
 (function () {
+'use strict';
 
 var angular = require('angular'),
     controllers = require('./controllers/main'),
