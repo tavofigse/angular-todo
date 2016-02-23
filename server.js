@@ -49,7 +49,7 @@ server.use(todoRoutes)
 if (!module.parent) {
   mongoose.connect('mongodb://localhost/angular_todos', function() {
     server.listen(port, function() {
-      logger.info('Server on http://localhost:%s/', port)
+      logger.info('Server on http://angular-todo:%s/', port)
     })
   })
 }
