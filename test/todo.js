@@ -2,7 +2,7 @@ var request = require('supertest-as-promised'),
     api = require('../server.js'),
     async = require('async'),
     host = process.env.API_TEST_HOST || api,
-    logger = require('../lib/logger'),
+    logger = require('../api/logger'),
     mongoose = require('mongoose');
 
 request = request(host)
@@ -11,7 +11,7 @@ request = request(host)
 function createTodo(data, callback) {
   // crear todo nueva
   request
-    .post('/todo/')
+    .post('/api/todo/')
     .set('Accept', 'application/json')
     .send(data)
     .expect(201)
@@ -31,7 +31,7 @@ function getTodo(res, callback) {
   id = res.body.todo.id
 
   request
-    .get('/todo/' + id)
+    .get('/api/todo/' + id)
     .expect(200)
     .expect('Content-Type', /application\/json/)
     .end(callback)
@@ -41,7 +41,7 @@ function deleteTodo(res, callback) {
   var id = res.body.todo.id
 
   request
-    .delete('/todo/' + id)
+    .delete('/api/todo/' + id)
     .expect(204)
     .end(callback)
 }
@@ -109,7 +109,7 @@ describe('Coleccion de Todos [/todo]', function() {
           // Ya cree la todo, ahora la actualizo
           newData.todo.id = res.id
           request
-            .put('/todo/' + res.id)
+            .put('/api/todo/' + res.id)
             .set('Accept', 'application/json')
             .send(newData)
             .expect(200)
@@ -146,7 +146,7 @@ describe('Coleccion de Todos [/todo]', function() {
         // check that not exist after
         function (res, callback) {
           request
-            .get('/todo/' + id)
+            .get('/api/todo/' + id)
             .expect(400)
             .end(callback)
         }
@@ -188,7 +188,7 @@ describe('Coleccion de Todos [/todo]', function() {
       ], done())
 
       request
-        .get('/todo/')
+        .get('/api/todo/')
         .expect(200)
         .expect('Content-Type', /application\/json/)
         .then(function (res) {
