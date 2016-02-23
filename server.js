@@ -6,7 +6,8 @@ var express = require('express'),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose'),
     cors        = require('cors'),
-    todoRoutes  = require('./api/todos')
+    todoRoutes  = require('./api/todos'),
+    logUrl      = require('./api/utils/log')
 
 
 /**
@@ -29,9 +30,9 @@ server.use(express.static('client/public'))
 /**
 * parse json requests
 **/
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: false }));
-
+server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: false }))
+server.use(logUrl.log)
 
 /**
 * ROUTER

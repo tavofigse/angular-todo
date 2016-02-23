@@ -7,7 +7,7 @@
   let logger = ((req,res,next) => {
     let _method = req.method,
     _body   = req.body,
-    _path   = `${res.req.originalMethod}  ${res.req.originalUrl}`;
+    _path   = `${_method}  ${res.req.originalUrl}`;
 
     console.log(_path);
 
