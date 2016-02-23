@@ -8,6 +8,8 @@
 # Installation
 > npm install all
 
+> add this new alias in /etc/hosts  '127.0.0.1 angular-todo'
+
 # Run
 > npm start
 
